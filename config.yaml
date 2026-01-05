@@ -1,0 +1,52 @@
+# Trading Bot Configuration
+
+# Hebrew keywords for trade signals
+hebrew_keywords:
+  buy_signals:
+    - "קניתי"  # I bought
+    - "קנייה"  # Purchase
+    - "לונג"   # Long
+    - "פתחתי"  # I opened
+
+  sell_signals:
+    - "מכירה"  # Sale
+    - "מכרתי"  # I sold
+    - "סגירה"  # Closing
+    - "סגרתי"  # I closed
+
+  # Position size keywords
+  position_fractions:
+    "רבע": 0.25        # Quarter
+    "שליש": 0.333      # Third
+    "חצי": 0.5         # Half
+    "שני שלישים": 0.666  # Two thirds
+    "שלושה רבעים": 0.75  # Three quarters
+    "מלא": 1.0         # Full
+    "הכל": 1.0         # Everything
+    "50%": 0.5
+    "25%": 0.25
+    "33%": 0.33
+    "75%": 0.75
+    "100%": 1.0
+
+# Option contract parsing patterns
+option_patterns:
+  # Matches patterns like "SPY 450C 12/31" or similar
+  - pattern: '([A-Z]+)\s+(\d+)([CP])\s+(\d{1,2}/\d{1,2})'
+    groups:
+      ticker: 1
+      strike: 2
+      type: 3  # C for Call, P for Put
+      expiry: 4
+
+# Trade execution settings
+execution:
+  order_type: "MKT"  # Market order
+  time_in_force: "DAY"  # Day order
+  retry_attempts: 3
+  retry_delay: 5  # seconds
+
+# Monitoring settings
+monitoring:
+  poll_interval: 10  # seconds between checking for new tweets
+  max_tweet_age: 300  # Only process tweets less than 5 minutes old
