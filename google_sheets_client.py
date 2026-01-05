@@ -65,7 +65,33 @@ class GoogleSheetsClient:
                         flow = InstalledAppFlow.from_client_secrets_file(
                             self.credentials_file, self.SCOPES
                         )
-                        creds = flow.run_local_server(port=0)
+
+                        # Try console-based auth (for servers without browsers)
+                        try:
+                            print("\n" + "="*60)
+                            print("AUTHENTICATION REQUIRED")
+                            print("="*60)
+                            print("\nPlease follow these steps:")
+                            print("1. Open this URL in a browser on ANY device:")
+                            print()
+                            auth_url, _ = flow.authorization_url(prompt='consent')
+                            print(f"   {auth_url}")
+                            print()
+                            print("2. Log in and authorize the application")
+                            print("3. Copy the authorization code from the browser")
+                            print("4. Paste it below")
+                            print("="*60)
+
+                            code = input("\nEnter authorization code: ").strip()
+                            flow.fetch_token(code=code)
+                            creds = flow.credentials
+
+                            print("\n✓ Authentication successful!")
+
+                        except Exception as console_error:
+                            print(f"\nConsole auth failed: {console_error}")
+                            print("Trying browser-based auth...")
+                            creds = flow.run_local_server(port=0)
 
                         # Save credentials for future use
                         with open(token_file, 'w') as token:
