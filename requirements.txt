@@ -1,0 +1,9 @@
+selenium==4.16.0
+google-auth==2.27.0
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.116.0
+pandas==2.1.4
+python-dotenv==1.0.0
+webdriver-manager==4.0.1
+schedule==1.2.0
